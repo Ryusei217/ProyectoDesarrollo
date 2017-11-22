@@ -26,48 +26,21 @@
     {% block head_scripts %}
     {% endblock head_scripts %}
 </head>
-<body class="app header-fixed aside-menu-fixed aside-menu-hidden">
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
 <header class="app-header navbar">
     <button class="navbar-toggler mobile-sidebar-toggler d-lg-none mr-auto" type="button">☰</button>
     <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">☰</button>
 
     <ul class="nav navbar-nav d-md-down-none">
         <li class="nav-item px-3">
-            <a class="nav-link" href="{% url 'home' %}">Inicio</a>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                <span class="d-md-down-none">Administración</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-header text-center">
-                    <strong>Catálogos</strong>
-                </div>
-                {% if perms.foo %}
-                    <a href="#" class="dropdown-item">
-                        <i class="fa fa-money"></i> Monedas
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa fa-map-marker"></i> Paises
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa fa-institution"></i> Empresas
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <i class="fa fa-calendar-check-o"></i> Periodos
-                    </a>
-                <div class="divider"></div>
-                <div class="dropdown-header text-center">
-                    <strong>Usuarios</strong>
-                </div>
-                <a href="#" class="dropdown-item">
-                    <i class="fa fa-user-circle-o"></i> Gestión de Usuarios
-                </a>
-                {% endif %}
-            </div>
+            <a class="nav-link" href="#">Inicio</a>
         </li>
         <li class="nav-item px-3">
-            <a class="nav-link" href="#">Conciliaciones</a>
+            <a class="nav-link" href="#">Usuarios</a>
+        </li>
+        <li class="nav-item px-3">
+            <a class="nav-link" href="#">Ajustes</a>
         </li>
     </ul>
     <ul class="nav navbar-nav ml-auto user-menu">
@@ -92,7 +65,32 @@
 </header>
 
 <div class="app-body">
-   <!-- Main content -->
+    <div class="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}"><i class="icon-home"></i> Inicio</a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-cube"></i> Componentes
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-medkit"></i> Productos
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link">
+                        <i class="fa fa-user-circle-o"></i> Usuarios
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+    </div>
+    <!-- Main content -->
     <main class="main">
         {% block content_header %}
         {% endblock %}

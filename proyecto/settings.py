@@ -196,12 +196,6 @@ MESSAGE_TAGS = {
     message_constants.ERROR: 'alert-danger'
 }
 
-# S3 settings
-AWS_ACCESS_KEY_ID = 'AKIAIXNYWK7GOM2MQ2EA'
-AWS_SECRET_ACCESS_KEY = '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'
-BOTO_BUCKET_LOCATION = 'SAEast'
-BOTO_S3_BUCKET = 'media-conciliacion'
-
 try:
     from .local_settings import *
 except ImportError:

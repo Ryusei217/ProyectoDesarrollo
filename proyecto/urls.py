@@ -22,8 +22,9 @@ from main import urls as app_urls
 from perfiles import urls as perfil_urls
 
 urlpatterns = [
-  url(r'^admin/', admin.site.urls),
-  url(r'^accounts/', include('allauth.urls')),
-  url(r'', include(app_urls)),
-  url(r'^profile/', include(perfil_urls)),
+    url(r'^admin/', admin.site.urls),
+    url(r'', include('two_factor.urls', 'two_factor')),
+    url(r'^account/', include('allauth.urls')),
+    url(r'', include(app_urls)),
+    url(r'^profile/', include(perfil_urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

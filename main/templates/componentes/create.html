@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content_header %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'periodos_lista' %}">Periodos</a></li>
+        <li class="breadcrumb-item active">Nuevo</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div id="ui-view">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col">
+                    <form method="post" action="">
+                        <div class="card card-accent-success">
+                            <div class="card-header">
+                                <i class="fa fa-plus-circle"></i>Nuevo Componente
+                            </div>
+                            <div class="card-body">
+                                {% csrf_token %}
+                                {{ form | crispy }}
+                            </div>
+                            <div class="card-footer">
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fa fa-save"></i> Guardar
+                                    </button>
+                                    <a class="btn btn-secondary" href="{% url 'periodos_lista' %}">
+                                        <i class="fa fa-times"></i> Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,9 +1,8 @@
-from django import forms
-
+from main.forms import FieldSetModelFormMixin
 from main.models.componente import Componente
 
 
-class ComponenteForm(forms.ModelForm):
+class ComponenteForm(FieldSetModelFormMixin):
     class Meta:
         model = Componente
         fields = [

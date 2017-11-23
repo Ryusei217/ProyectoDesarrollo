@@ -4,8 +4,8 @@
 
 {% block content_header %}
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'index' %}">Inicio</a></li>
-        <li class="breadcrumb-item"><a href="{% url 'periodos_lista' %}">Periodos</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'componente_lista' %}">Periodos</a></li>
         <li class="breadcrumb-item active">Nuevo</li>
     </ol>
 {% endblock %}
@@ -22,14 +22,14 @@
                             </div>
                             <div class="card-body">
                                 {% csrf_token %}
-                                {{ form | crispy }}
+                                {% crispy form %}
                             </div>
                             <div class="card-footer">
                                 <div class="text-right">
                                     <button type="submit" class="btn btn-success">
                                         <i class="fa fa-save"></i> Guardar
                                     </button>
-                                    <a class="btn btn-secondary" href="{% url 'periodos_lista' %}">
+                                    <a class="btn btn-secondary" href="{% url 'componente_lista' %}">
                                         <i class="fa fa-times"></i> Cancelar
                                     </a>
                                 </div>

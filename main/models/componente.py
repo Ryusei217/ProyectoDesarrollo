@@ -1,5 +1,7 @@
+from decimal import Decimal
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import ManyToManyField
 
 
 class Componente(models.Model):
@@ -24,7 +26,7 @@ class Componente(models.Model):
 
     creado = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
     fecha_firma = models.DateTimeField(auto_now=True, verbose_name='Fecha Firma')
-    firma = models.CharField(max_length=255, blank=True, null=True, verbose_name='Firma Electronica')
+    firma = models.CharField(max_length=1500, blank=True, null=True, verbose_name='Firma Electronica')
 
     class Meta:
         app_label = 'main'
@@ -33,3 +35,16 @@ class Componente(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.unii, self.nombre_comercial)
+
+    def to_dict(self):
+        opts = self._meta
+        data = {}
+        for f in opts.concrete_fields + opts.many_to_many:
+            if isinstance(f, ManyToManyField):
+                if self.pk is None:
+                    data[f.name] = []
+                else:
+                    data[f.name] = list(f.value_from_object(self).values_list('pk', flat=True))
+            else:
+                data[f.name] = str(f.value_from_object(self))
+        return data

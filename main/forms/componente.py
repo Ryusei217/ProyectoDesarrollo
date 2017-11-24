@@ -1,8 +1,12 @@
+from django import forms
+
 from main.forms import FieldSetModelFormMixin
 from main.models.componente import Componente
 
 
 class ComponenteForm(FieldSetModelFormMixin):
+    password = forms.CharField(widget=forms.PasswordInput, label='Contraseña (Firmar)')
+
     class Meta:
         model = Componente
         fields = [

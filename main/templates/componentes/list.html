@@ -9,7 +9,7 @@
 {% block content_header %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
-        <li class="breadcrumb-item">Periodos</li>
+        <li class="breadcrumb-item">Componentes</li>
     </ol>
 {% endblock %}
 
@@ -20,7 +20,7 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Lista de Periodos
+                            <i class="fa fa-align-justify"></i> Lista de Componentes
                         </div>
                         <div class="card-body">
                             <div class="row justify-content-between">
@@ -78,11 +78,18 @@
                             targets: [0, 4]
                         },
                         {
-
                             orderable: false,
                             searchable: false,
                             className: "center",
-                            targets: [5]
+                            targets: [5],
+                            "defaultContent": "<div class=\"btn-group\" role=\"group\" aria-label=\"Acciones\">\n" +
+                            "<button id=\"editar\" type=\"button\" class=\"btn btn-warning\">\n" +
+                            "<i class=\"fa fa-pencil\"></i>\n" +
+                            "</button>\n" +
+                            "<button id=\"eliminar\" type=\"button\" class=\"btn btn-danger\">\n" +
+                            "<i class=\"fa fa-trash\"></i>\n" +
+                            "</button>\n" +
+                            "</div>"
                         }
                     ],
                     searching: true,

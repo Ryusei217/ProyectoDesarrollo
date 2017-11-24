@@ -1,4 +1,10 @@
+import decimal
+import json
+
+from django.core import signing
+from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
+from django.forms import model_to_dict
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, TemplateView, UpdateView
@@ -12,35 +18,16 @@ from main.forms import ComponenteForm
 from main.models import Componente
 
 
+def decimal_default(obj):
+    if isinstance(obj, decimal.Decimal):
+        return float(obj)
+    raise TypeError
+
+
 class ComponenteJson(OTPRequiredMixin, BaseDatatableView):
     model = Componente
     columns = ['id', 'unii', 'iupac', 'nombre_comercial', 'tipo']
     order_columns = ['id', 'unii', 'iupac', 'nombre_comercial', 'tipo']
-
-    def render_column(self, row, column):
-        if column == 'acciones':
-            if row.estado == 1:
-                return '<button id="editar" type="button" class="btn btn-warning">' \
-                       ' <i class="fa fa-pencil"></i> ' \
-                       '</button>' \
-                       '<button id="eliminar" type="button" class="btn btn-danger">' \
-                       ' <i class="fa fa-trash"></i> ' \
-                       '</button>' \
-                       '<button id="cerrar" type="button" class="btn btn-primary">' \
-                       ' <i class="fa fa-chevron-circle-down"></i> ' \
-                       '</button>'
-            else:
-                return '<button id="editar" type="button" class="btn btn-warning">' \
-                       ' <i class="fa fa-pencil"></i> ' \
-                       '</button>' \
-                       '<button id="eliminar" type="button" class="btn btn-danger">' \
-                       ' <i class="fa fa-trash"></i> ' \
-                       '</button>' \
-                       '<button id="abrir" type="button" class="btn btn-success">' \
-                       '<i class="fa fa-chevron-circle-up"></i>' \
-                       ' </button>'
-        else:
-            return super(ComponenteJson, self).render_column(row, column)
 
 
 class ComponenteList(OTPRequiredMixin, TemplateView):
@@ -50,23 +37,35 @@ class ComponenteList(OTPRequiredMixin, TemplateView):
 class ComponenteCreate(OTPRequiredMixin, CreateView):
     model = Componente
     template_name = 'componentes/create.html'
-    success_url = reverse_lazy('componente_list')
+    success_url = reverse_lazy('componente_create')
     form_class = ComponenteForm
 
     def post(self, request, *args, **kwargs):
+        password = request.POST.get('password', '')
         form = ComponenteForm(request.POST)
         componente = form.save(commit=False)
 
-        messages.add_message(request, messages.WARNING, 'Componente creado de forma correcta')
-        componente.save()
-        return redirect('componente_list')
+        user = authenticate(username=request.user.username, password=password)
+
+        if user is not None:
+            with transaction.atomic():
+                # asignamos el usuario y firmamos el componente
+                componente.responsable = user
+                componente.save()
+                serialized = componente.to_dict()
+                componente.firma = signing.dumps(serialized, salt=password)
+                componente.save()
+                messages.add_message(request, messages.SUCCESS, 'Componente creado de forma correcta')
+                return redirect('componente_list')
+
+        return render(request, 'componentes/create.html', {'form': form})
 
 
 class ComponenteUpdate(OTPRequiredMixin, UpdateView):
     model = Componente
     form_class = ComponenteForm
     template_name = 'componentes/update.html'
-    success_url = reverse_lazy('componente_lista')
+    success_url = reverse_lazy('componente_list')
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -75,7 +74,7 @@ class ComponenteUpdate(OTPRequiredMixin, UpdateView):
 
         messages.add_message(request, messages.WARNING, 'Componente editado de forma correcta')
         componente.save()
-        return redirect('componente_lista')
+        return redirect('componente_list')
 
 
 class ComponenteDelete(OTPRequiredMixin, TemplateView):

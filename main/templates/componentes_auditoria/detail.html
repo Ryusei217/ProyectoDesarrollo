@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content_header %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'componente_list' %}">Componentes</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'componente_auditoria_list' %}">Pistas de Auditoria</a></li>
+        <li class="breadcrumb-item active">Detalle</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div id="ui-view">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col">
+                    <div class="card card-accent-warning">
+                        <div class="card-header">
+                            <i class="fa fa-edit"></i>Pista de Auditoria del Componente
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                <b>Componente:</b><br />
+                                {{ object.componente }}
+                            </p>
+                            <hr />
+                            <p>
+                                <b>Usuario:</b><br />
+                                {{ object.usuario.first_name }} {{ object.usuario.last_name }}
+                            </p>
+                            <hr />
+                            <p>
+                                <b>Accion:</b><br />
+                                {{ object.get_accion_display }}
+                            </p>
+                            <hr />
+                            <p>
+                                <b>Fecha:</b><br />
+                                {{ object.fecha }}
+                            </p>
+                            <hr />
+                            <p>
+                                <b>Descripcion de la Accion:</b>
+                                <blockquote class="blockquote firma">
+                                    <p class="mb-0">{{ object.descripcion }}</p>
+                                </blockquote>
+                            </p>
+                            <hr />
+                            <p>
+                                <b>Contenido Original:</b>
+                                <blockquote class="blockquote firma">
+                                    <p class="mb-0">{{ object.contenido }}</p>
+                                </blockquote>
+                            </p>
+                            <hr />
+                            <p>
+                                <b>Firma Electrónica:</b>
+                                <blockquote class="blockquote firma">
+                                    <p class="mb-0">{{ object.firma }}</p>
+                                    <footer class="blockquote-footer">
+                                        Firmado por <b>{{ object.usuario.first_name }} {{ object.usuario.last_name }}</b> el {{ object.fecha }}
+                                    </footer>
+                                </blockquote>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <div class="text-right">
+                                <a class="btn btn-secondary" href="{% url 'componente_auditoria_list' %}">
+                                    <i class="fa fa-arrow-left"></i> Volver
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

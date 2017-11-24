@@ -20,23 +20,19 @@
                 <div class="col">
                     <div class="card">
                         <div class="card-header">
-                            <i class="fa fa-align-justify"></i> Lista de Componentes
+                            <i class="fa fa-align-justify"></i> Pistas de Auditoria para Componentes
                         </div>
                         <div class="card-body">
                             <div class="row justify-content-between">
-                                <div class="col-4">
+                                <div class="col-6">
                                     <div class="input-group">
                                         <input id="search" type="text" class="form-control" placeholder="Buscar....."
                                                aria-label="Buscar">
                                     </div>
                                 </div>
-                                <div class="col-4 text-right">
-                                    <a href="{% url 'componente_auditoria_list' %}" class="btn btn-warning">
-                                        <i class="fa fa-user-secret"></i> Pistas de Auditoria
-                                    </a>
-
-                                    <a href="{% url 'componente_create' %}" class="btn btn-primary">
-                                        <i class="fa fa-plus"></i> Nuevo
+                                <div class="col-2">
+                                    <a href="{% url 'componente_list' %}" class="btn btn-secondary btn-block">
+                                        <i class="fa fa-arrow-left"></i> Volver
                                     </a>
                                 </div>
                             </div>
@@ -45,10 +41,10 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Componente</th>
                                     <th>UNII</th>
-                                    <th>IUPAC</th>
-                                    <th>Nombre Comercial</th>
-                                    <th>Tipo</th>
+                                    <th>Accion</th>
+                                    <th>Fecha</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
@@ -79,7 +75,12 @@
                         {
                             orderable: true,
                             searchable: true,
-                            targets: [0, 4]
+                            targets: [0, 3]
+                        },
+                        {
+                            orederable: true,
+                            searchable: true,
+                            targets: [4]
                         },
                         {
                             orderable: false,
@@ -87,11 +88,8 @@
                             className: "center",
                             targets: [5],
                             "defaultContent": "<div class=\"btn-group\" role=\"group\" aria-label=\"Acciones\">\n" +
-                            "<button id=\"editar\" type=\"button\" class=\"btn btn-warning\">\n" +
-                            "<i class=\"fa fa-pencil\"></i>\n" +
-                            "</button>\n" +
-                            "<button id=\"eliminar\" type=\"button\" class=\"btn btn-danger\">\n" +
-                            "<i class=\"fa fa-trash\"></i>\n" +
+                            "<button id=\"editar\" type=\"button\" class=\"btn btn-info\">\n" +
+                            "<i class=\"fa fa-search\"></i>\n" +
                             "</button>\n" +
                             "</div>"
                         }
@@ -100,7 +98,7 @@
                     processing: true,
                     serverSide: true,
                     stateSave: true,
-                    ajax: "{% url 'componente_data' %}"
+                    ajax: "{% url 'componente_auditoria_data' %}"
                 }
             );
 
@@ -112,56 +110,6 @@
                 var dataTable = tableData.row( $(this).parents('tr') ).data();
                 window.location = "{% url 'componente_update' 12345 %}".replace(/12345/, dataTable[0].toString());
             });
-
-            table.on("click", "#eliminar", function() {
-                var dataTable = tableData.row( $(this).parents('tr') ).data();
-                eliminar(dataTable[0]);
-            });
-
-            function eliminar(id) {
-                swal({
-                    title: '¿Esta seguro de eliminar este elemento?',
-                    text: "¡Esto no se puede revertir!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Si, eliminar.',
-                    cancelButtonText: 'No, Cancelar!',
-                    confirmButtonClass: 'btn btn-success',
-                    cancelButtonClass: 'btn btn-danger',
-                    buttonsStyling: true
-                }).then(function () {
-                    $.ajax({
-                        url: "{% url 'componente_delete' %}",
-                        method: 'POST',
-                        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
-                        data: {
-                            id: id
-                        },
-                        success: function(data) {
-                            if(data.result === 'OK'){
-                                swal("¡Eliminado!", data.message, "success");
-                                tableData.ajax.reload();
-                            }
-                            else {
-                                swal("¡Error!", data.message, "error");
-                            }
-                        },
-                        error: function () {
-                            swal("¡Error!", "¡Ha ocurrido un error inesperado!", "error");
-                        }
-                    });
-                }, function (dismiss) {
-                    if (dismiss === 'cancel') {
-                        swal(
-                            'Cancelado',
-                            'No se ha eliminado nada.',
-                            'error'
-                        )
-                    }
-                })
-            }
         });
     </script>
 {% endblock %}

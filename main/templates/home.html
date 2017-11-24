@@ -18,6 +18,16 @@
 {% endblock %}
 
 {% block content %}
+    {% if not default_device %}
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">¡Importante!</h4>
+            <p>
+                Tienes que habilitar la autenticacion de dos factores para usar la aplicacion y poder firmar
+                registros.
+            </p>
+            <a href="{% url 'two_factor:setup' %}" class="btn btn-warning">Activar ahora</a>
+        </div>
+    {% endif %}
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-sm-6 col-lg-3">

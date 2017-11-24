@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 from django.contrib.messages import constants as message_constants
+from django.core.urlresolvers import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -55,6 +56,12 @@ INSTALLED_APPS = [
     'bootstrap4',
     'crispy_forms',
 
+    # two factor
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'two_factor',
+
     # apps
     'main',
     'perfiles'
@@ -66,6 +73,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_otp.middleware.OTPMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -75,7 +83,7 @@ ROOT_URLCONF = 'proyecto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'main/templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'main/templates'), os.path.join(BASE_DIR, 'perfiles/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,6 +115,9 @@ SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_AVATAR_SUPPORT = "avatar"
 ACCOUNT_SESSION_COOKIE_AGE = 14400
 LOGIN_REDIRECT_URL = '/'
+
+# Two factor
+LOGIN_URL = 'two_factor:login'
 
 # Settings thumbnail
 THUMBNAIL_ALIASES = {

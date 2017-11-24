@@ -6,7 +6,7 @@ class Perfil(models.Model):
     usuario = models.OneToOneField(User, related_name='perfil', verbose_name='Usuario')
 
     class Meta:
-        app_label = 'main_app'
+        app_label = 'main'
         verbose_name = 'perfil'
         verbose_name_plural = 'perfiles'
 

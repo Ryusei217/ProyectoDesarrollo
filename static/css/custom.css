@@ -25,3 +25,7 @@ ul.user-menu {
     vertical-align: middle;
     padding: 5px;
 }
+
+.firma p {
+    font-size: 0.8rem !important;
+}

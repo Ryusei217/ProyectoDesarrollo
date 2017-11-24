@@ -56,7 +56,7 @@
                 <div class="dropdown-header text-center">
                     <strong>Configuración</strong>
                 </div>
-                <a class="dropdown-item" href="{% url 'perfil_home' %}"><i class="fa fa-user"></i> Perfil</a>
+                <a class="dropdown-item" href="{% url 'two_factor:profile' %}"><i class="fa fa-user"></i> Perfil</a>
                 <div class="divider"></div>
                 <a href="{% url 'account_logout' %}" class="dropdown-item"><i class="fa fa-lock"></i> Salir</a>
             </div>
@@ -72,7 +72,7 @@
                     <a class="nav-link" href="{% url 'home' %}"><i class="icon-home"></i> Inicio</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="{% url 'componente_list' %}" class="nav-link">
                         <i class="fa fa-cube"></i> Componentes
                     </a>
                 </li>

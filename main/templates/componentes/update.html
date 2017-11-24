@@ -10,6 +10,15 @@
 {% endblock %}
 
 {% block content %}
+    {% if request.user != object.responsable %}
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">¡Importante!</h4>
+            <p>
+                Al modificar el contenido de este registro asume la responsibilidad por el contenido del mismo y
+                debera ingresar su contraseña para firmarlo.
+            </p>
+        </div>
+    {% endif %}
     <div id="ui-view">
         <div class="animated fadeIn">
             <div class="row">

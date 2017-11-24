@@ -18,12 +18,6 @@ from main.forms import ComponenteForm
 from main.models import Componente
 
 
-def decimal_default(obj):
-    if isinstance(obj, decimal.Decimal):
-        return float(obj)
-    raise TypeError
-
-
 class ComponenteJson(OTPRequiredMixin, BaseDatatableView):
     model = Componente
     columns = ['id', 'unii', 'iupac', 'nombre_comercial', 'tipo']
@@ -69,12 +63,24 @@ class ComponenteUpdate(OTPRequiredMixin, UpdateView):
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
+        password = request.POST.get('password', '')
         form = ComponenteForm(request.POST, instance=self.object)
         componente = form.save(commit=False)
 
-        messages.add_message(request, messages.WARNING, 'Componente editado de forma correcta')
-        componente.save()
-        return redirect('componente_list')
+        user = authenticate(username=request.user.username, password=password)
+
+        if user is not None:
+            with transaction.atomic():
+                # asignamos el usuario y firmamos el componente
+                componente.responsable = user
+                componente.save()
+                serialized = componente.to_dict()
+                componente.firma = signing.dumps(serialized, salt=password)
+                componente.save()
+                messages.add_message(request, messages.WARNING, 'Componente editado de forma correcta')
+                return redirect('componente_list')
+
+        return render(request, 'componentes/update.html', {'form': form})
 
 
 class ComponenteDelete(OTPRequiredMixin, TemplateView):

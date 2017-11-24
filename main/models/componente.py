@@ -25,7 +25,7 @@ class Componente(models.Model):
 
     creado = models.DateTimeField(auto_now_add=True, verbose_name='Creado')
     fecha_firma = models.DateTimeField(auto_now=True, verbose_name='Fecha Firma')
-    firma = models.CharField(max_length=1500, blank=True, null=True, verbose_name='Firma Electronica')
+    firma = models.TextField(blank=True, null=True, verbose_name='Firma Electronica')
 
     class Meta:
         app_label = 'main'

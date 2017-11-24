@@ -5,10 +5,14 @@ from main.models import Componente
 
 
 class ComponenteAuditoria(models.Model):
+    CREADO = 1
+    EDITADO = 2
+    ELIMINADO = 3
+
     TIPO_ACCION = (
-        (1, 'Creado'),
-        (2, 'Editado'),
-        (3, 'Eliminado'),
+        (CREADO, 'Creado'),
+        (EDITADO, 'Editado'),
+        (ELIMINADO, 'Eliminado'),
     )
 
     componente = models.ForeignKey(Componente, related_name='pistas_auditoria', verbose_name='Componente')

@@ -13,3 +13,7 @@ class ComponenteForm(FieldSetModelFormMixin):
             'id', 'nombre_comercial', 'iupac', 'unii', 'formula', 'peso_molecular', 'biodisponibilidad',
             'union_proteica', 'metabolismo', 'vida_media', 'excrecion', 'via_admon', 'tipo'
         ]
+
+
+class ComponenteUpdateForm(ComponenteForm):
+    descripcion = forms.CharField(widget=forms.Textarea, label='Motivo de la Edicion')

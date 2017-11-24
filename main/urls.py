@@ -14,6 +14,9 @@ urlpatterns = [
     url(r'^componentes/eliminar/$', app_views.ComponenteDelete.as_view(), name="componente_delete"),
 
     # Auditoria de componentes
-    url(r'^componentes/auditoria/data/$', app_views.ComponenteAuditoriaJson.as_view(), name="componente_auditoria_data"),
+    url(r'^componentes/auditoria/data/$', app_views.ComponenteAuditoriaJson.as_view(),
+        name="componente_auditoria_data"),
     url(r'^componentes/auditoria/$', app_views.ComponenteAuditoriaList.as_view(), name="componente_auditoria_list"),
+    url(r'^componentes/auditoria/(?P<pk>\d+)/$', app_views.ComponenteAuditoriaDetail.as_view(),
+        name="componente_auditoria_detail"),
 ]

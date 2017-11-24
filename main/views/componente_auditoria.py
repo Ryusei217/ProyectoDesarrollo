@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from two_factor.views import OTPRequiredMixin
 
@@ -13,3 +13,8 @@ class ComponenteAuditoriaJson(OTPRequiredMixin, BaseDatatableView):
 
 class ComponenteAuditoriaList(OTPRequiredMixin, TemplateView):
     template_name = 'componentes_auditoria/list.html'
+
+
+class ComponenteAuditoriaDetail(OTPRequiredMixin, DetailView):
+    model = ComponenteAuditoria
+    template_name = 'componentes_auditoria/detail.html'

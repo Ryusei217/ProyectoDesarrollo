@@ -18,7 +18,7 @@
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col">
-                    <div class="card">
+                    <div class="card card-accent-warning">
                         <div class="card-header">
                             <i class="fa fa-align-justify"></i> Pistas de Auditoria para Componentes
                         </div>
@@ -108,7 +108,7 @@
 
             table.on("click", "#editar", function() {
                 var dataTable = tableData.row( $(this).parents('tr') ).data();
-                window.location = "{% url 'componente_update' 12345 %}".replace(/12345/, dataTable[0].toString());
+                window.location = "{% url 'componente_auditoria_detail' 12345 %}".replace(/12345/, dataTable[0].toString());
             });
         });
     </script>

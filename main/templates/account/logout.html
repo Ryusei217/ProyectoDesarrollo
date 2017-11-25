@@ -1,0 +1,39 @@
+{% extends "base_alt.html" %}
+
+{% block title %}
+    Salir
+{% endblock title %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mx-4">
+                <div class="card-body p-4">
+                    <h1>Salir</h1>
+                    <p class="text-muted">¿Estas segurro de querer cerrar tu sesión y salir de la aplicación?</p>
+                </div>
+                <div class="card-footer p-4">
+                    <form method="post" action="{% url 'account_logout' %}">
+                        {% csrf_token %}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-6">
+                                <button class="btn btn-block btn-danger" type="submit">
+                                    <span>Salir</span>
+                                </button>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-block btn-secondary" href="{% url 'home' %}">
+                                    <span>Cancelar</span>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

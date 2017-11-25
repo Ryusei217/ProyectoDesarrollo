@@ -1,0 +1,67 @@
+{% extends "avatar/base.html" %}
+{% load i18n avatar_tags %}
+{% load crispy_forms_tags %}
+{% load static from staticfiles %}
+
+{% block title %}
+    Cambiar Avatar
+{% endblock title %}
+
+{% block content_header %}
+    <!-- Breadcrumb -->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'perfil_home' %}">Pefil</a></li>
+        <li class="breadcrumb-item active">Cambiar Avatar</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col">
+                <form enctype="multipart/form-data" method="POST" action="">
+                    <div class="card card-accent-warning">
+                        <div class="card-header">
+                            <strong>Cambiar mi Avatar</strong>
+                        </div>
+                        <div class="card-body">
+                            <h3>{% trans "Select your avatar" %}</h3>
+                            {% if not avatars %}
+                                <p class="text-muted">No has subido un avator para seleccionar, por favor sube uno ahora.</p>
+                            {% else %}
+                                <form method="POST" action="{% url 'avatar_change' %}">
+                                    <p class="text-muted">Clic en el avatar que deseas usar</p>
+                                    {% csrf_token %}
+                                    {{ primary_avatar_form | crispy }}
+                                </form>
+                            {% endif %}
+
+                            <br>
+                            <hr>
+
+                            <p>O Sube una nueva imagen</p>
+                            {% csrf_token %}
+                            {{ upload_avatar_form | crispy }}
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Subir Imagen</button>
+                            <a class="btn btn-secondary pull-right" href="{% url 'perfil_home' %}"> Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block scripts %}
+    <script>
+        $(document).ready(function(){
+            $('input[type=radio]').change(function(){
+                $(this).parents('form').submit();
+            });
+        });
+    </script>
+{% endblock scripts %}

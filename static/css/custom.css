@@ -1,0 +1,31 @@
+/*Datatable*/
+#data_filter.dataTables_filter {
+    display: none;
+}
+
+.dataTables_wrapper.container-fluid.dt-bootstrap4.no-footer{
+    padding: 0;
+}
+
+.dataTablesWidth{
+    width: 100% !important;
+}
+
+.text-left-force {
+    text-align: left !important;
+}
+
+/*Usuarios*/
+ul.user-menu {
+    margin-right: 10px;
+}
+
+/* correcciones CoreUI */
+.table th, .table td {
+    vertical-align: middle;
+    padding: 5px;
+}
+
+.firma p {
+    font-size: 0.8rem !important;
+}

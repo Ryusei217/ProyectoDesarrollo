@@ -27,7 +27,7 @@ SECRET_KEY = '5ut2zo8ausf#ot&2-!&0-*^&0tt_1kou3x_831c=7$dpyf7e#j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['http://privadoumg.us-east-2.elasticbeanstalk.com/', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['privadoumg.us-east-2.elasticbeanstalk.com', 'localhost', '127.0.0.1']
 
 
 # Application definition

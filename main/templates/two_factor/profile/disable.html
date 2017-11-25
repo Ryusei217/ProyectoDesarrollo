@@ -1,0 +1,44 @@
+{% extends "two_factor/_base_focus.html" %}
+{% load i18n %}
+
+{% block title %}
+    {% trans "Enable Two-Factor Authentication" %}
+{% endblock title %}
+
+
+{% block content_header %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'two_factor:profile' %}">Seguridad de la Cuenta</a></li>
+        <li class="breadcrumb-item active">{% trans "Disable Two-factor Authentication" %}</li>
+    </ol>
+{% endblock %}
+
+{% block content %}
+    <div id="ui-view">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col">
+                    <form method="post">
+                        <div class="card card-accent-default">
+                            <div class="card-header">
+                                <i class="fa fa-ban"></i> {% trans "Disable Two-factor Authentication" %}
+                            </div>
+                            <div class="card-body">
+                                <p>{% blocktrans %}You are about to disable two-factor authentication. This
+                                    compromises your account security, are you sure?{% endblocktrans %}</p>
+                                <table>{{ form }}</table>
+                            </div>
+                            <div class="card-footer">
+                                {% csrf_token %}
+                                <button class="btn btn-danger" type="submit">{% trans "Disable" %}</button>
+                                <a href="{% url 'two_factor:profile'%}"
+                                   class="pull-right btn btn-secondary">{% trans "Back to Account Security" %}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

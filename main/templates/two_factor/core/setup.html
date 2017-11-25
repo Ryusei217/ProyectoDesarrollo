@@ -9,7 +9,8 @@
 {% block content_header %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{% url 'home' %}">Inicio</a></li>
-        <li class="breadcrumb-item active">Perfil</li>
+        <li class="breadcrumb-item"><a href="{% url 'two_factor:profile' %}">Seguridad de la Cuenta</a></li>
+        <li class="breadcrumb-item active">{% trans "Enable Two-Factor Authentication" %}</li>
     </ol>
 {% endblock %}
 

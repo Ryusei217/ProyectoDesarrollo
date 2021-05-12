@@ -10,7 +10,7 @@
   "dependencies": {
     "bootstrap": "4.0.0-beta",
     "bootstrap-datepicker": "^1.7.1",
-    "chart.js": "^2.7.1",
+    "chart.js": "^2.9.4",
     "datatables.net-bs4": "^1.10.16",
     "datatables.net-colreorder-bs4": "^1.4.1",
     "datatables.net-responsive-bs4": "^2.2.0",
